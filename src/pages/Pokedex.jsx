@@ -2,6 +2,8 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import ListPokemons from "../components/ListPokemons";
+import { paginationLogic } from "../helpers/paginationLogic";
+
 import "./styles/Pokedex.css"
 
 const Pokedex = () => {
@@ -9,7 +11,7 @@ const Pokedex = () => {
   const [pokemonsFilter, setPokemonsFilter] = useState([])
   const [types, setTypes] = useState([])
   const [namePokemon, setNamePokemon] = useState("")
-  const [pokemonType, setPokemonType] = useState([])
+  const [pokemonType, setPokemonType] = useState("")
 
   const [currentPage, setcurrentPage] = useState(1)
 
@@ -25,9 +27,48 @@ const Pokedex = () => {
     setPokemonType(e.target.value);
   }
 
+const {lastPage, pagesInBlock, pokemonsInPage}=paginationLogic(currentPage, pokemonsFilter)
+
+const handleClickPage=(newPage)=>{
+  setcurrentPage(newPage)
+
+}
+
+
+const handlePreviousPage=()=>{
+  const newPage=currentPage-1
+  if(newPage<1){
+    setcurrentPage(lastPage)
+  }else{
+    setcurrentPage(newPage)
+  }
+}
+
+
+
+const handleNextPage=()=>{
+  const newPage=currentPage+1
+  if(newPage>lastPage){
+    setcurrentPage(1)
+  }else{
+    setcurrentPage(newPage)
+  }
+}
+
+const handleFirstPage=()=>{
+  setcurrentPage(1)
+}
+
+const handleLastPage=()=>{
+  setcurrentPage(lastPage)
+}
+
+
+
+
   useEffect(() => {
     const URL = `https://pokeapi.co/api/v2/${pokemonType ? `type/${pokemonType}/` :
-    "pokemon/?limit=30"}`
+    "pokemon/?limit=1151"}`
     console.log(URL);
     axios.get(URL)
       .then((res) =>{
@@ -60,7 +101,7 @@ const Pokedex = () => {
 
   return (
     <main>
-      <header>
+      <header className="pokedex__header">
         <h1>Pokedex</h1>
         <p>
           Welcome <span>{nameTrainer}</span>, you can find your favorite pokemon
@@ -69,8 +110,8 @@ const Pokedex = () => {
 
         <form onSubmit={handleSubmit} className="pokedex__form" >
           <div className="pokedex__search">
-            <input type="text" id="namePokemon"/>
-            <button type='submit'>Search</button>
+            <input className="pokedex__input"  type="text" id="namePokemon"/>
+            <button className="pokedex__btn"  type='submit'>Search</button>
           </div>
           <select onChange={handleChangeSelect} className="pokedex_select">
             <option value="">All Pokemons</option>
@@ -83,7 +124,18 @@ const Pokedex = () => {
 
 
 
-      <ListPokemons pokemons={pokemonsFilter}/>
+      <ListPokemons pokemons={pokemonsInPage}/>
+
+      <ul className="pokedex__listPage">
+        <li onClick={handlePreviousPage}>{"<"}</li>
+        <li onClick={handleFirstPage}>...</li>
+        {
+          pagesInBlock.map(pageInBlock=><li className={currentPage===pageInBlock ? "actualPage":""} onClick={()=>handleClickPage(pageInBlock)} key={pageInBlock}>{pageInBlock}</li>)
+        }
+
+        <li onClick={handleLastPage}>...</li>
+        <li onClick={handleNextPage}>{">"}</li>
+      </ul>
 
 
     </main>

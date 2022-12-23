@@ -25,9 +25,11 @@ for(let currentBlock=1; currentBlock*pagesPerBlock<currentPage;currentBlock++){
 
 const minPage=actualBlock*pagesPerBlock-pagesPerBlock
 for(let currentPageInBlock =actualBlock*pagesPerBlock;currentPageInBlock>minPage;currentPageInBlock--){
-    if (currentPageInBlock) {
+    if (currentPageInBlock<=lastPage) {
+        pagesInBlock.unshift(currentPageInBlock)
         
     }
 }
+return {pagesInBlock, lastPage, pokemonsInPage}
 
 }

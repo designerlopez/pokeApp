@@ -46,3 +46,18 @@
     transform: translateX(-50%);
 
 }
+
+.header__logout{
+    width: 10px;
+    height: 10px;
+    color: white;
+    cursor:pointer;
+    font-size: 20px;
+    transition: 300ms color ease;
+
+}
+
+.header__logout:hover{
+    color: red;
+
+}
