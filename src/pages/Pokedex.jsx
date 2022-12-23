@@ -11,13 +11,14 @@ const Pokedex = () => {
   const [namePokemon, setNamePokemon] = useState("")
   const [pokemonType, setPokemonType] = useState([])
 
+  const [currentPage, setcurrentPage] = useState(1)
+
   const nameTrainer = useSelector((state) => state.nameTrainer);
 
   const handleSubmit =(e)=>{
     e.preventDefault()
     const name=e.target.namePokemon.value
     setNamePokemon(name)
-
   }
 
   const handleChangeSelect=(e)=>{
