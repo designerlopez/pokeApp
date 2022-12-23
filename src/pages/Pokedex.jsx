@@ -9,7 +9,7 @@ const Pokedex = () => {
   const nameTrainer = useSelector((state) => state.nameTrainer);
 
   useEffect(() => {
-    const URL = "https://pokeapi.co/api/v2/pokemon/?limit=1151";
+    const URL = "https://pokeapi.co/api/v2/pokemon/?limit=150";
     axios
       .get(URL)
       .then((res) => setPokemons(res.data.results))
