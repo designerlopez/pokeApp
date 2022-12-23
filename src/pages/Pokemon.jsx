@@ -28,7 +28,7 @@ const Pokemon = () => {
     <main className='Pokemon'>
       
       <section className='pokemonId'>
-        <section className='pokemonId__header'></section>
+        <section className={`pokemonId__header bg-lg-${dataPokemon?.types[0].type.name}`}></section>
         <img className='pokemonId__img' src={dataPokemon?.sprites.other["official-artwork"].front_default} alt="" />
         <h3 className='pokemonId__id'># {dataPokemon?.id}</h3>
         <h2 className='pokemonId__name'>{dataPokemon?.name}</h2>
@@ -47,10 +47,12 @@ const Pokemon = () => {
             <h4 className='pokemonId__info-title'>Types</h4>
             <div className='pokemonId__info-data'>
                 {
-                  dataPokemon?.types.map(type=> <p className='pokemonId__info-value' key={type.type.name}>{type.type.name}</p>)
+                  dataPokemon?.types.map(type=> <p className={`pokemonId__info-value bg-lg-${type.type.name}`}key={type.type.name}>{type.type.name}</p>)
                 }
 
               
+
+
             </div>
           </div>
 
