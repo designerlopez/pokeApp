@@ -6,12 +6,8 @@
     width: min(290px, 100%);
     margin-bottom: 1rem;
     margin-top: 2rem;
-    gap: 10px;
     cursor:pointer;
-    transition: 300ms transform ease;
-    
-
-
+    transition: 500ms transform ease;
 }
 
 .pokeCard:hover{
